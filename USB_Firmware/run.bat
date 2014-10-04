@@ -1,0 +1,1 @@
+copy "D:\Spira_Heaven\0-My Works\3D_Displayer\USB_Firmware\slave.hex" "D:\Spira_Heaven\0-My Works\3D_Displayer\C#\3D_Displayer\3D_Displayer\bin\Debug" /y
