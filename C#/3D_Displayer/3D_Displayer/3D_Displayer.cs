@@ -256,8 +256,8 @@ namespace TD_Displayer
                 this.Dispatcher.BeginInvoke(Re_T, "世界线变动中......\n           "+"0.00"+"%");
                 int TransTime_S = System.Environment.TickCount;
 
-                //FileStream FsDebug = new FileStream(".//Debug.txt", FileMode.OpenOrCreate, FileAccess.Write);
-                //StreamWriter StrDebug = new StreamWriter(FsDebug, System.Text.Encoding.UTF8);
+                FileStream FsDebug = new FileStream(".//Debug.txt", FileMode.OpenOrCreate, FileAccess.Write);
+                StreamWriter StrDebug = new StreamWriter(FsDebug, System.Text.Encoding.UTF8);
 
                 for (int i = 0; i < Trans_Matrix_len ; i++)
                 {
@@ -282,9 +282,9 @@ namespace TD_Displayer
                                 Trans_Buffer[j] = Trans_No_B[j - 4];
                             else if(j<510)
                             {
-                                //Trans_Buffer[j] = Trans_Matrix[i * 2040 + j - 8]
+                                Trans_Buffer[j] = Trans_Matrix[i * 502 + j - 8];
 
-                                if(b==1)
+                                /*if(b==1)
                                 {
                                     if (a==255)
                                     {
@@ -303,14 +303,14 @@ namespace TD_Displayer
                                     b ++;
                                     //a = 0;
                                     Trans_Buffer[j] = Convert.ToByte(0);
-                                }
+                                }*/
                             }
                             else
                                 Trans_Buffer[j] = Convert.ToByte(rai[j-510]);
 
                         }
                     }
-                    /*else if (i == Trans_Matrix_len)
+                    else if (i == Trans_Matrix_len)
                     {
                         for (int j = 0; j < Trans_Matrix_Rem; j++)
                         {
@@ -325,11 +325,14 @@ namespace TD_Displayer
                             else if (j < 8)
                                 Trans_Buffer[j] = Trans_No_B[j - 4];
                             else
-                                Trans_Buffer[j] = Trans_Matrix[i * 2040 + j - 8];
+                                Trans_Buffer[j] = Trans_Matrix[i * 502 + j - 8];
                         }
-                        for (int j = Trans_Matrix_Rem; j < 2040; j++)
+                        for (int j = Trans_Matrix_Rem; j < 510; j++)
                             Trans_Buffer[j] = 0x00;
-                    }*/
+                        for (int j = 0; j < 2;j++ )
+                            Trans_Buffer[j+510] = Convert.ToByte(rai[j]);
+
+                    }
                     
 
                     Success = Usb_Mine.Trans(512, Trans_Buffer);
@@ -355,6 +358,8 @@ namespace TD_Displayer
                             }
                             else
                             {
+                                StrDebug.Write(System.Convert.ToString(rai[0], 16).Insert(0, new string('0', 2 - System.Convert.ToString(rai[0], 16).Length)) + System.Convert.ToString(rai[1], 16).Insert(0, new string('0', 2 - System.Convert.ToString(rai[1], 16).Length)) + "\n");
+                                StrDebug.Write(System.Convert.ToString(Trans_Buffer[0], 16).Insert(0, new string('0', 2 - System.Convert.ToString(Trans_Buffer[0], 16).Length)) + System.Convert.ToString(Trans_Buffer[1], 16).Insert(0, new string('0', 2 - System.Convert.ToString(Trans_Buffer[1], 16).Length)) + "\n\n");
                                 //StrDebug.Write(System.Convert.ToString(rai[0], 2).Insert(0, new string('0', 8 - System.Convert.ToString(rai[0], 2).Length)) + System.Convert.ToString(rai[1], 2).Insert(0, new string('0', 8 - System.Convert.ToString(rai[1], 2).Length)) + "\n");
                                 //StrDebug.Write(System.Convert.ToString(Trans_Buffer[0], 2).Insert(0, new string('0', 8 - System.Convert.ToString(Trans_Buffer[0], 2).Length)) + System.Convert.ToString(Trans_Buffer[1], 2).Insert(0, new string('0', 8 - System.Convert.ToString(Trans_Buffer[1], 2).Length)) + "\n\n");
                                 i--;
@@ -372,8 +377,8 @@ namespace TD_Displayer
 
                 int TransTime_E = System.Environment.TickCount;
 
-                //StrDebug.Close();
-                //FsDebug.Close();
+                StrDebug.Close();
+                FsDebug.Close();
                 Image_Matrix.Close();
                 Image_Matrix_add.Close();
                 this.Dispatcher.BeginInvoke(Re_B, 100);

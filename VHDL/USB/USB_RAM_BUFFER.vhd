@@ -86,8 +86,8 @@ component FIFO_TO_USB is
 		rdreq		: IN STD_LOGIC ;
 		wrclk		: IN STD_LOGIC ;
 		wrreq		: IN STD_LOGIC ;
-		q		: OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
-		rdusedw		: OUT STD_LOGIC_VECTOR (10 DOWNTO 0);
+		q		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+		rdusedw		: OUT STD_LOGIC_VECTOR (11 DOWNTO 0);
 		wrusedw		: OUT STD_LOGIC_VECTOR (10 DOWNTO 0)
 	);
 end component;
@@ -108,7 +108,7 @@ signal fifo_utr_write,fifo_utr_read:std_logic:='0';
 signal fifo_utr_aclr:std_logic:='0';
 
 signal data_from_usb:std_logic_vector(7 downto 0);
-signal data_to_usb:std_logic_vector(15 downto 0);
+signal data_to_usb:std_logic_vector(7 downto 0);
 signal clk_from_ram,clk_to_usb:std_logic:='0';
 signal fifo_rtu_write,fifo_rtu_read:std_logic:='0';
 signal fifo_rtu_aclr:std_logic:='0';
@@ -121,7 +121,7 @@ signal fifo_utr_num_r_buffer:std_logic_vector(8 downto 0);
 
 signal fifo_rtu_num_w:std_logic_vector(10 downto 0);
 signal fifo_rtu_num_w_buffer:std_logic_vector(10 downto 0);
-signal fifo_rtu_num_r:std_logic_vector(10 downto 0);
+signal fifo_rtu_num_r:std_logic_vector(11 downto 0);
 ----------------pc cmd------------------
 signal command:std_logic_vector(15 downto 0);
 
@@ -136,6 +136,7 @@ signal usb_in_allow:std_logic:='0';
 signal usb_out_allow:std_logic:='0';
 
 signal usb_check:std_logic_vector(15 downto 0);
+signal usb_check_o:std_logic_vector(7 downto 0);
 
 -------------------ram-------------------
 signal w_num_s:std_logic_vector(15 downto 0):=x"0000";
@@ -164,7 +165,7 @@ signal ram_state:rstates:=free;
 
 begin
 
-usb_clk<=clk_usb_n;
+usb_clk<=clk_usb_270;
 
 buffer_usb:FIFO_TO_OTHER 
 	port map
@@ -319,13 +320,17 @@ begin
 						pktend<='0';
 						con_ack:=con_ack+1;
 					when 2 =>
+						usb_check_o<=usb_check(7 downto 0);
 						slwr<='1';
 						con_ack:=con_ack+1;
-					when 3 =>
+					when 3=>
+						usb_check_o<=usb_check(15 downto 8);
+						con_ack:=con_ack+1;
+					when 4 =>
 						slwr<='0';
 						pktend<='1';
 						con_ack:=con_ack+1;
-					when 4 =>
+					when 5 =>
 						usb_data_en<='0';
 						pktend<='0';
 						usb_state<=free;
@@ -367,9 +372,9 @@ begin
 							elsif usb_in='0' and fifo_rtu_num_r(7 downto 0)=x"00" then
 								slwr<='0';
 							
-							elsif usb_in='1' and fifo_rtu_num_r(10)='0' then
+							elsif usb_in='1' and fifo_rtu_num_r(11)='0' then
 							
-								case fifo_rtu_num_r(9 downto 8) is
+								case fifo_rtu_num_r(10 downto 9) is
 									
 									when "00" =>
 										usb_state<=free;
@@ -430,9 +435,9 @@ data_from_usb<=usb_data_in(7 downto 0);
 --data_from_usb(15 downto 8)<=usb_data_in(7 downto 0);
 
 with usb_state select
-	usb_data_out<=usb_check when ack,
+	usb_data_out(7 downto 0)<=usb_check_o when ack,
 					  data_to_usb when collect,
-					  x"0000" when others;
+					  x"00" when others;
 			
 
 --------------RAM------------

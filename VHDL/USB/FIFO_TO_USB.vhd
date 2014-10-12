@@ -48,8 +48,8 @@ ENTITY FIFO_TO_USB IS
 		rdreq		: IN STD_LOGIC ;
 		wrclk		: IN STD_LOGIC ;
 		wrreq		: IN STD_LOGIC ;
-		q		: OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
-		rdusedw		: OUT STD_LOGIC_VECTOR (10 DOWNTO 0);
+		q		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+		rdusedw		: OUT STD_LOGIC_VECTOR (11 DOWNTO 0);
 		wrusedw		: OUT STD_LOGIC_VECTOR (10 DOWNTO 0)
 	);
 END FIFO_TO_USB;
@@ -57,9 +57,9 @@ END FIFO_TO_USB;
 
 ARCHITECTURE SYN OF fifo_to_usb IS
 
-	SIGNAL sub_wire0	: STD_LOGIC_VECTOR (15 DOWNTO 0);
+	SIGNAL sub_wire0	: STD_LOGIC_VECTOR (7 DOWNTO 0);
 	SIGNAL sub_wire1	: STD_LOGIC_VECTOR (10 DOWNTO 0);
-	SIGNAL sub_wire2	: STD_LOGIC_VECTOR (10 DOWNTO 0);
+	SIGNAL sub_wire2	: STD_LOGIC_VECTOR (11 DOWNTO 0);
 
 
 
@@ -85,21 +85,21 @@ ARCHITECTURE SYN OF fifo_to_usb IS
 	);
 	PORT (
 			rdclk	: IN STD_LOGIC ;
-			q	: OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
+			q	: OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
 			wrclk	: IN STD_LOGIC ;
 			wrreq	: IN STD_LOGIC ;
 			wrusedw	: OUT STD_LOGIC_VECTOR (10 DOWNTO 0);
 			aclr	: IN STD_LOGIC ;
 			data	: IN STD_LOGIC_VECTOR (15 DOWNTO 0);
 			rdreq	: IN STD_LOGIC ;
-			rdusedw	: OUT STD_LOGIC_VECTOR (10 DOWNTO 0)
+			rdusedw	: OUT STD_LOGIC_VECTOR (11 DOWNTO 0)
 	);
 	END COMPONENT;
 
 BEGIN
-	q    <= sub_wire0(15 DOWNTO 0);
+	q    <= sub_wire0(7 DOWNTO 0);
 	wrusedw    <= sub_wire1(10 DOWNTO 0);
-	rdusedw    <= sub_wire2(10 DOWNTO 0);
+	rdusedw    <= sub_wire2(11 DOWNTO 0);
 
 	dcfifo_mixed_widths_component : dcfifo_mixed_widths
 	GENERIC MAP (
@@ -111,8 +111,8 @@ BEGIN
 		lpm_type => "dcfifo_mixed_widths",
 		lpm_width => 16,
 		lpm_widthu => 11,
-		lpm_widthu_r => 11,
-		lpm_width_r => 16,
+		lpm_widthu_r => 12,
+		lpm_width_r => 8,
 		overflow_checking => "ON",
 		rdsync_delaypipe => 5,
 		read_aclr_synch => "OFF",
@@ -163,7 +163,7 @@ END SYN;
 -- Retrieval info: PRIVATE: dc_aclr NUMERIC "1"
 -- Retrieval info: PRIVATE: diff_widths NUMERIC "1"
 -- Retrieval info: PRIVATE: msb_usedw NUMERIC "1"
--- Retrieval info: PRIVATE: output_width NUMERIC "16"
+-- Retrieval info: PRIVATE: output_width NUMERIC "8"
 -- Retrieval info: PRIVATE: rsEmpty NUMERIC "0"
 -- Retrieval info: PRIVATE: rsFull NUMERIC "0"
 -- Retrieval info: PRIVATE: rsUsedW NUMERIC "1"
@@ -181,8 +181,8 @@ END SYN;
 -- Retrieval info: CONSTANT: LPM_TYPE STRING "dcfifo_mixed_widths"
 -- Retrieval info: CONSTANT: LPM_WIDTH NUMERIC "16"
 -- Retrieval info: CONSTANT: LPM_WIDTHU NUMERIC "11"
--- Retrieval info: CONSTANT: LPM_WIDTHU_R NUMERIC "11"
--- Retrieval info: CONSTANT: LPM_WIDTH_R NUMERIC "16"
+-- Retrieval info: CONSTANT: LPM_WIDTHU_R NUMERIC "12"
+-- Retrieval info: CONSTANT: LPM_WIDTH_R NUMERIC "8"
 -- Retrieval info: CONSTANT: OVERFLOW_CHECKING STRING "ON"
 -- Retrieval info: CONSTANT: RDSYNC_DELAYPIPE NUMERIC "5"
 -- Retrieval info: CONSTANT: READ_ACLR_SYNCH STRING "OFF"
@@ -192,10 +192,10 @@ END SYN;
 -- Retrieval info: CONSTANT: WRSYNC_DELAYPIPE NUMERIC "5"
 -- Retrieval info: USED_PORT: aclr 0 0 0 0 INPUT GND "aclr"
 -- Retrieval info: USED_PORT: data 0 0 16 0 INPUT NODEFVAL "data[15..0]"
--- Retrieval info: USED_PORT: q 0 0 16 0 OUTPUT NODEFVAL "q[15..0]"
+-- Retrieval info: USED_PORT: q 0 0 8 0 OUTPUT NODEFVAL "q[7..0]"
 -- Retrieval info: USED_PORT: rdclk 0 0 0 0 INPUT NODEFVAL "rdclk"
 -- Retrieval info: USED_PORT: rdreq 0 0 0 0 INPUT NODEFVAL "rdreq"
--- Retrieval info: USED_PORT: rdusedw 0 0 11 0 OUTPUT NODEFVAL "rdusedw[10..0]"
+-- Retrieval info: USED_PORT: rdusedw 0 0 12 0 OUTPUT NODEFVAL "rdusedw[11..0]"
 -- Retrieval info: USED_PORT: wrclk 0 0 0 0 INPUT NODEFVAL "wrclk"
 -- Retrieval info: USED_PORT: wrreq 0 0 0 0 INPUT NODEFVAL "wrreq"
 -- Retrieval info: USED_PORT: wrusedw 0 0 11 0 OUTPUT NODEFVAL "wrusedw[10..0]"
@@ -205,8 +205,8 @@ END SYN;
 -- Retrieval info: CONNECT: @rdreq 0 0 0 0 rdreq 0 0 0 0
 -- Retrieval info: CONNECT: @wrclk 0 0 0 0 wrclk 0 0 0 0
 -- Retrieval info: CONNECT: @wrreq 0 0 0 0 wrreq 0 0 0 0
--- Retrieval info: CONNECT: q 0 0 16 0 @q 0 0 16 0
--- Retrieval info: CONNECT: rdusedw 0 0 11 0 @rdusedw 0 0 11 0
+-- Retrieval info: CONNECT: q 0 0 8 0 @q 0 0 8 0
+-- Retrieval info: CONNECT: rdusedw 0 0 12 0 @rdusedw 0 0 12 0
 -- Retrieval info: CONNECT: wrusedw 0 0 11 0 @wrusedw 0 0 11 0
 -- Retrieval info: GEN_FILE: TYPE_NORMAL FIFO_TO_USB.vhd TRUE
 -- Retrieval info: GEN_FILE: TYPE_NORMAL FIFO_TO_USB.inc FALSE
