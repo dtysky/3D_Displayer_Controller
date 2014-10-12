@@ -1,7 +1,7 @@
-A51 MACRO ASSEMBLER  DSCR                                                                 05/03/2014 23:13:06 PAGE     1
+A51 MACRO ASSEMBLER  DSCR                                                                 10/12/2014 16:12:50 PAGE     1
 
 
-MACRO ASSEMBLER A51 V8.02b
+MACRO ASSEMBLER A51 V8.01
 OBJECT MODULE PLACED IN DSCR.OBJ
 ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE DSCR.A51 NOMOD51 SET(SMALL) DEBUG EP
 
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
 0113 06               55           db   DSCR_DEVQUAL         ;; Decriptor type
 0114 0002             56           dw   0002H                ;; Specification Version (BCD)
 0116 00               57           db   00H                  ;; Device class
-A51 MACRO ASSEMBLER  DSCR                                                                 05/03/2014 23:13:06 PAGE     2
+A51 MACRO ASSEMBLER  DSCR                                                                 10/12/2014 16:12:50 PAGE     2
 
 0117 00               58           db   00H                  ;; Device sub-class
 0118 00               59           db   00H                  ;; Device sub-sub-class
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
 0147 00              121           db   0                    ;; Zero-based index of this interface
 0148 00              122           db   0                    ;; Alternate setting
 0149 02              123           db   2                    ;; Number of end points 
-A51 MACRO ASSEMBLER  DSCR                                                                 05/03/2014 23:13:06 PAGE     3
+A51 MACRO ASSEMBLER  DSCR                                                                 10/12/2014 16:12:50 PAGE     3
 
 014A FF              124           db   0ffH                 ;; Interface class
 014B 00              125           db   00H                  ;; Interface sub class
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
 0190 2000            187           db   ' ',00
 0192 7400            188           db   't',00
 0194 6F00            189           db   'o',00
-A51 MACRO ASSEMBLER  DSCR                                                                 05/03/2014 23:13:06 PAGE     4
+A51 MACRO ASSEMBLER  DSCR                                                                 10/12/2014 16:12:50 PAGE     4
 
 0196 2000            190           db   ' ',00
 0198 4500            191           db   'E',00
@@ -252,7 +252,7 @@ LOC  OBJ            LINE     SOURCE
 01EC 0000            236           dw   0000H
                      237           end
                                    
-A51 MACRO ASSEMBLER  DSCR                                                                 05/03/2014 23:13:06 PAGE     5
+A51 MACRO ASSEMBLER  DSCR                                                                 10/12/2014 16:12:50 PAGE     5
 
 SYMBOL TABLE LISTING
 ------ ----- -------

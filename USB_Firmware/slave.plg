@@ -3,7 +3,51 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-D:\Spira_Heaven\0-MyWorks\3D_Displayer\USB_Firmware\slave.uvproj
-Project File Date:  09/20/2014
+D:\Spira_Heaven\0-MyWorks\3D_Displayer\Controller\USB_Firmware\slave.uvproj
+Project File Date:  10/12/2014
 
 <h2>Output:</h2>
+Build target 'Target 1'
+compiling FW.C...
+assembling DSCR.A51...
+compiling slave.c...
+linking...
+Program Size: data=47.5 xdata=4473 code=2859
+creating hex file from "slave"...
+User command #1: D:\Spira_Heaven\0-MyWorks\3D_Displayer\Controller\USB_Firmware\hex2bix -i -f 0xC2 slave.iic slave.hex
+Intel Hex file to EZ-USB Binary file conversion utility
+Copyright (c) 1997-2005, Cypress Semiconductor Inc.
+2904 Bytes written.
+Total Code Bytes = 2859
+Conversion completed successfully.
+User command #2: "D:\Spira_Heaven\0-My Works\3D_Displayer\USB_Firmware\run.bat"
+--- Error: User Command terminated, Exit-Code = 1
+"slave" - 1 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling FW.C...
+assembling DSCR.A51...
+compiling slave.c...
+linking...
+Program Size: data=47.5 xdata=4473 code=2859
+creating hex file from "slave"...
+User command #1: D:\Spira_Heaven\0-MyWorks\3D_Displayer\Controller\USB_Firmware\hex2bix -i -f 0xC2 slave.iic slave.hex
+Intel Hex file to EZ-USB Binary file conversion utility
+Copyright (c) 1997-2005, Cypress Semiconductor Inc.
+2904 Bytes written.
+Total Code Bytes = 2859
+Conversion completed successfully.
+"slave" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling FW.C...
+assembling DSCR.A51...
+compiling slave.c...
+linking...
+Program Size: data=47.5 xdata=4473 code=2859
+creating hex file from "slave"...
+User command #1: D:\Spira_Heaven\0-MyWorks\3D_Displayer\Controller\USB_Firmware\hex2bix -i -f 0xC2 slave.iic slave.hex
+Intel Hex file to EZ-USB Binary file conversion utility
+Copyright (c) 1997-2005, Cypress Semiconductor Inc.
+2904 Bytes written.
+Total Code Bytes = 2859
+Conversion completed successfully.
+"slave" - 0 Error(s), 0 Warning(s).

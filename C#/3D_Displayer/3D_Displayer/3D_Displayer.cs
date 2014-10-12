@@ -54,14 +54,14 @@ namespace TD_Displayer
         public bool Down_Fw(String Fw_Path)
         {
             bool Success;
-            Fw = MyUsbList["Cypress FX2LP Sample Device"] as CyFX2Device;
+            Fw = MyUsbList["Cypress USB BootLoader"] as CyFX2Device;
             if (Fw != null)
             {
                 Success = Fw.LoadRAM(Fw_Path);
             }
             else
             {
-                Fw = MyUsbList["Cypress FX2LP StreamerExample Device"] as CyFX2Device;
+                Fw = MyUsbList["Cypress USB StreamerExample"] as CyFX2Device;
                 Success = Fw.LoadRAM(Fw_Path);
             }
             return Success;
@@ -134,9 +134,6 @@ namespace TD_Displayer
                     break;
                 }
                 
-            
-            Thread.Sleep(1);
-
             MyInPoint.Abort();
             MyInPoint.Reset();
             MyInPoint.Abort();
@@ -245,7 +242,7 @@ namespace TD_Displayer
                 BinaryReader Image_Matrix = new BinaryReader(Image_Matrix_add);
 
                 Trans_Matrix = Image_Matrix.ReadBytes(Convert.ToInt32(Image_Matrix.BaseStream.Length));
-                int Trans_Matrix_len = Trans_Matrix.Length / 512;
+                int Trans_Matrix_len = 10000;//Trans_Matrix.Length / 512;
                 int Trans_Matrix_Rem = Trans_Matrix.Length % 512;
 
                 MyInvoke_B Re_B = new MyInvoke_B(Refresh_Bar);

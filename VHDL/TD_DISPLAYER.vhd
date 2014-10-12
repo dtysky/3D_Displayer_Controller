@@ -477,31 +477,6 @@ begin
 				data_in=>lwb_in_data
 			);
 	
---	DDR2_M_1:DDR2_M
---		port map
---			(
---				ck=>ddr2_clk,ck_n=>ddr2_n_clk,
---				cke=>cke,cs_n=>n_cs,ras_n=>n_ras,cas_n=>n_cas,we_n=>n_we,
---				dm_rdqs(1)=>udm,dm_rdqs(0)=>ldm,
---				dqs(1)=>udqs,dqs(0)=>ldqs,
---				odt=>odt,
---				ba=>ddr2_bank,addr=>ddr2_addr,
---				dq=>ddr2_data(31 downto 16)
---			);
---	
---	DDR2_M_2:DDR2_M
---		port map
---			(
---				ck=>ddr2_clk,ck_n=>ddr2_n_clk,
---				cke=>cke,cs_n=>n_cs,ras_n=>n_ras,cas_n=>n_cas,we_n=>n_we,
---				dm_rdqs(1)=>udm_2,dm_rdqs(0)=>ldm_2,
---				dqs(1)=>udqs_2,dqs(0)=>ldqs_2,
---				odt=>odt,
---				ba=>ddr2_bank,addr=>ddr2_addr,
---				dq=>ddr2_data(15 downto 0)
---			);
---			
-
 			
 RAM:process(clk_320m_p,pll2_lock)
 

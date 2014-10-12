@@ -158,7 +158,7 @@ void TD_Init( void )
 	
 	EP6FIFOCFG = 0x00;            
   SYNCDELAY;
-  EP6FIFOCFG = 0x09;            // AUTOIN=1, ZEROLENIN=1, WORDWIDE=1
+  EP6FIFOCFG = 0x08;            // AUTOIN=1, ZEROLENIN=1, WORDWIDE=0
   SYNCDELAY;
 	
 	EP6AUTOINLENH = 0x02;
@@ -291,7 +291,7 @@ BOOL RstAll(void)
 	SYNCDELAY;
 	EP6FIFOCFG = 0x00;            
 	SYNCDELAY;
-	EP6FIFOCFG = 0x09;            
+	EP6FIFOCFG = 0x08;  //8bits               
 	SYNCDELAY;
 	EP6AUTOINLENH = 0x02;
 	SYNCDELAY;

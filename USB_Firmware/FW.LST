@@ -1,9 +1,9 @@
-C51 COMPILER V9.52.0.0   FW                                                                05/03/2014 23:13:06 PAGE 1   
+C51 COMPILER V9.00   FW                                                                    10/12/2014 16:12:50 PAGE 1   
 
 
-C51 COMPILER V9.52.0.0, COMPILATION OF MODULE FW
+C51 COMPILER V9.00, COMPILATION OF MODULE FW
 OBJECT MODULE PLACED IN FW.OBJ
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE FW.C OPTIMIZE(6,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE FW.C OPTIMIZE(6,SPEED) BROWSE DEBUG OBJECTEXTEND
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   53          BOOL      Selfpwr;
   54          volatile BOOL   Sleep;                  // Sleep mode enable flag
   55          
-C51 COMPILER V9.52.0.0   FW                                                                05/03/2014 23:13:06 PAGE 2   
+C51 COMPILER V9.00   FW                                                                    10/12/2014 16:12:50 PAGE 2   
 
   56          WORD   pDeviceDscr;   // Pointer to Device Descriptor; Descriptors may be moved
   57          WORD   pDeviceQualDscr;
@@ -126,7 +126,7 @@ line level    source
  115   1         WORD   ExtDescrAddr;
  116   1         DWORD   tCount=0;
  117   1         // Initialize Global States
-C51 COMPILER V9.52.0.0   FW                                                                05/03/2014 23:13:06 PAGE 3   
+C51 COMPILER V9.00   FW                                                                    10/12/2014 16:12:50 PAGE 3   
 
  118   1         Sleep = FALSE;               // Disable sleep mode
  119   1         Rwuen = FALSE;               // Disable remote wakeup
@@ -134,25 +134,25 @@ line level    source
  121   1         GotSUD = FALSE;               // Clear "Got setup data" flag
  122   1      
  123   1      
- 124   1        
+ 124   1              
  125   1         // Initialize user device
  126   1          TD_Init();
  127   1         //JTAG Enable and SYNC signals for ZTEX Spartan 6 module 1.1 (FGPA+FX2LP setup)
- 128   1        OEA|=0x02; //Declare PA.1 as output
- 129   1        SYNCDELAY;
- 130   1        IOA|=0x02; //output 1 on PA.1
- 131   1        SYNCDELAY;
+ 128   1              OEA|=0x02; //Declare PA.1 as output
+ 129   1              SYNCDELAY;
+ 130   1              IOA|=0x02; //output 1 on PA.1
+ 131   1              SYNCDELAY;
  132   1      
- 133   1        OEC|=0x01; //PC.0 as output (SYNC signal)
- 134   1        SYNCDELAY;
- 135   1        IOC|=0x00; //output 0 on PC.0...SYNC signal is LOW 
- 136   1        SYNCDELAY;
+ 133   1              OEC|=0x01; //PC.0 as output (SYNC signal)
+ 134   1              SYNCDELAY;
+ 135   1              IOC|=0x00; //output 0 on PC.0...SYNC signal is LOW 
+ 136   1              SYNCDELAY;
  137   1      
- 138   1        OEC&=0xFD; //PC.1 as input (Clock changing signal)
- 139   1        SYNCDELAY;
- 140   1        
- 141   1        
- 142   1        
+ 138   1              OEC&=0xFD; //PC.1 as input (Clock changing signal)
+ 139   1              SYNCDELAY;
+ 140   1              
+ 141   1              
+ 142   1              
  143   1      
  144   1         // The following section of code is used to relocate the descriptor table. 
  145   1         // Since the SUDPTRH and SUDPTRL are assigned the address of the descriptor 
@@ -190,7 +190,7 @@ line level    source
  177   2            offset = (WORD)&DeviceDscr - INTERNAL_DSCR_ADDR;
  178   2            pDeviceQualDscr -= offset;
  179   2            pConfigDscr -= offset;
-C51 COMPILER V9.52.0.0   FW                                                                05/03/2014 23:13:06 PAGE 4   
+C51 COMPILER V9.00   FW                                                                    10/12/2014 16:12:50 PAGE 4   
 
  180   2            pOtherConfigDscr -= offset;
  181   2            pHighSpeedConfigDscr -= offset;
@@ -254,7 +254,7 @@ line level    source
  238   5                        }
  239   4                      while(!Rwuen && EZUSB_EXTWAKEUP());
  240   4                      // Must continue to go back into suspend if the host has disabled remote wakeup
-C51 COMPILER V9.52.0.0   FW                                                                05/03/2014 23:13:06 PAGE 5   
+C51 COMPILER V9.00   FW                                                                    10/12/2014 16:12:50 PAGE 5   
 
  241   4                      // *and* the wakeup was caused by the external wakeup pin.
  242   4                      
@@ -264,9 +264,9 @@ line level    source
  246   4                    }   
  247   3                }
  248   2      
- 249   2        
- 250   2        
- 251   2            TD_Poll();
+ 249   2              
+ 250   2              
+ 251   2              TD_Poll();
  252   2      
  253   2         }
  254   1      }
@@ -318,7 +318,7 @@ line level    source
  300   2               DR_SetInterface();
  301   2               break;
  302   2            case SC_SET_CONFIGURATION:               // *** Set Configuration
-C51 COMPILER V9.52.0.0   FW                                                                05/03/2014 23:13:06 PAGE 6   
+C51 COMPILER V9.00   FW                                                                    10/12/2014 16:12:50 PAGE 6   
 
  303   2               DR_SetConfiguration();
  304   2               break;
@@ -382,7 +382,7 @@ line level    source
  362   3                        else if(SETUPDAT[2] == 2)
  363   3                           // Set Feature Test Mode.  The core handles this request.  However, it is
  364   3                           // necessary for the firmware to complete the handshake phase of the
-C51 COMPILER V9.52.0.0   FW                                                                05/03/2014 23:13:06 PAGE 7   
+C51 COMPILER V9.00   FW                                                                    10/12/2014 16:12:50 PAGE 7   
 
  365   3                           // control transfer before the chip will enter test mode.  It is also
  366   3                           // necessary for FX2 to be physically disconnected (D+ and D-)
@@ -396,16 +396,16 @@ line level    source
  374   3                        break;
  375   3                  }
  376   2               break;
- 377   2            
- 378   2            case 0xFF:
- 379   2              if (RstAll())
- 380   2                break;
- 381   2            
- 382   2            case 0xFE:
- 383   2              if (GetState())
- 384   2                break;
- 385   2              
- 386   2            
+ 377   2                              
+ 378   2                              case 0xFF:
+ 379   2                                      if (RstAll())
+ 380   2                                              break;
+ 381   2                              
+ 382   2                              case 0xFE:
+ 383   2                                      if (GetState())
+ 384   2                                              break;
+ 385   2                                      
+ 386   2                              
  387   2            default:                     // *** Invalid Command
  388   2               if(DR_VendorCmnd())
  389   2                  EZUSB_STALL_EP0();            // Stall End Point 0
