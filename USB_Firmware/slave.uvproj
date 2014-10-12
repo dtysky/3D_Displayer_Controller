@@ -71,7 +71,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name>D:\Spira_Heaven\0-MyWorks\3D_Displayer\Controller\USB_Firmware\hex2bix -i -f 0xC2 slave.iic slave.hex</UserProg1Name>
             <UserProg2Name>"D:\Spira_Heaven\0-My Works\3D_Displayer\USB_Firmware\run.bat"</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>

@@ -119,7 +119,7 @@ signal timeout_q:std_logic_vector(11 downto 0);
 signal timeout_buffer:std_logic_vector(11 downto 0);
 
 -----------------flags-------------------
-type ustates is (free,full,ack,reset,lock);
+type ustates is (free,full,ack,rd,reset,lock);
 
 signal usb_state,usb_state_buffer:ustates:=free;
 
@@ -127,7 +127,7 @@ signal usb_state,usb_state_buffer:ustates:=free;
 
 begin
 
-usb_clk<=clk_usb_n;
+usb_clk<=clk_usb_270;
 
 PLL_1:PLL
 	port map
@@ -144,7 +144,7 @@ buffer_usb:FIFO_TO_OTHER
 		(
 			aclr=>fifo_utr_aclr,
 			data=>data_from_usb,q(7 downto 0)=>data_to_ram(15 downto 8),q(15 downto 8)=>data_to_ram(7 downto 0),
-			wrclk=>clk_usb_270,rdclk=>'0',
+			wrclk=>clk_usb_270,rdclk=>clk_usb_270,
 			wrreq=>fifo_utr_write,rdreq=>fifo_utr_read,
 			wrusedw=>fifo_utr_num_w,rdusedw=>fifo_utr_num_r
 		);
@@ -226,6 +226,16 @@ begin
 						end case;
 						
 				end case;
+		
+		-------------RD-------------
+--			when rd =>
+--				
+--				if fifo_utr_num_r="100000000" then
+--					fifo_utr_read<='1';
+--				elsif fifo_utr_num_r="000000000" then
+--					fifo_utr_read<='0';
+--					usb_state<=ack;
+--				end if;
 
 		-------------ACK------------
 			when ack =>	
@@ -263,6 +273,7 @@ begin
 				con_full:=0;
 				con_ack:=0;
 				slwr<='0';
+				fifo_utr_aclr<='1';
 				usb_state<=free;
 			
 		-----------LOCK------------

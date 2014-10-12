@@ -242,7 +242,7 @@ namespace TD_Displayer
                 BinaryReader Image_Matrix = new BinaryReader(Image_Matrix_add);
 
                 Trans_Matrix = Image_Matrix.ReadBytes(Convert.ToInt32(Image_Matrix.BaseStream.Length));
-                int Trans_Matrix_len = 10000;//Trans_Matrix.Length / 512;
+                int Trans_Matrix_len = Trans_Matrix.Length / 512;
                 int Trans_Matrix_Rem = Trans_Matrix.Length % 512;
 
                 MyInvoke_B Re_B = new MyInvoke_B(Refresh_Bar);
@@ -255,6 +255,9 @@ namespace TD_Displayer
                 Usb_Mine.SetOutTime("Out", 2);
                 this.Dispatcher.BeginInvoke(Re_T, "世界线变动中......\n           "+"0.00"+"%");
                 int TransTime_S = System.Environment.TickCount;
+
+                //FileStream FsDebug = new FileStream(".//Debug.txt", FileMode.OpenOrCreate, FileAccess.Write);
+                //StreamWriter StrDebug = new StreamWriter(FsDebug, System.Text.Encoding.UTF8);
 
                 for (int i = 0; i < Trans_Matrix_len ; i++)
                 {
@@ -344,9 +347,16 @@ namespace TD_Displayer
                             if(rai[0]==Trans_Buffer[0] && rai[1]==Trans_Buffer[1])
                             {
                                 Trans_No ++;
+                                if (Trans_No%100==0)
+                                {
+                                    this.Dispatcher.BeginInvoke(Re_B, Trans_No * 100 / Trans_Matrix_len);
+                                    this.Dispatcher.BeginInvoke(Re_T, "世界线变动中......\n           " + Convert.ToString(Trans_No * 100.0 / Trans_Matrix_len) + "%");
+                                }
                             }
                             else
                             {
+                                //StrDebug.Write(System.Convert.ToString(rai[0], 2).Insert(0, new string('0', 8 - System.Convert.ToString(rai[0], 2).Length)) + System.Convert.ToString(rai[1], 2).Insert(0, new string('0', 8 - System.Convert.ToString(rai[1], 2).Length)) + "\n");
+                                //StrDebug.Write(System.Convert.ToString(Trans_Buffer[0], 2).Insert(0, new string('0', 8 - System.Convert.ToString(Trans_Buffer[0], 2).Length)) + System.Convert.ToString(Trans_Buffer[1], 2).Insert(0, new string('0', 8 - System.Convert.ToString(Trans_Buffer[1], 2).Length)) + "\n\n");
                                 i--;
                                 Usb_Mine.Reset();
                             }
@@ -358,16 +368,16 @@ namespace TD_Displayer
                         Usb_Mine.Reset();
                     }
 
-                    this.Dispatcher.BeginInvoke(Re_B, Trans_No * 100 / Trans_Matrix_len);
-                    this.Dispatcher.BeginInvoke(Re_T, "世界线变动中......\n           " + Convert.ToString(Trans_No * 100.0 / Trans_Matrix_len) + "%");
-
                 }
 
                 int TransTime_E = System.Environment.TickCount;
 
+                //StrDebug.Close();
+                //FsDebug.Close();
                 Image_Matrix.Close();
                 Image_Matrix_add.Close();
-                this.Dispatcher.BeginInvoke(Re_T, "世界线偏斜速率\n              " + Convert.ToString(Trans_Matrix.Length * 1000.0 / (TransTime_E - TransTime_S) / 1048576 ) + "MB/s");
+                this.Dispatcher.BeginInvoke(Re_B, 100);
+                this.Dispatcher.Invoke(Re_T, "世界线偏斜速率\n              " + Convert.ToString(Trans_Matrix.Length * 1000.0 / (TransTime_E - TransTime_S) / 1048576 ) + "MB/s");
                 Trans.Abort();
 
             }
