@@ -282,28 +282,18 @@ namespace TD_Displayer
                                 Trans_Buffer[j] = Trans_No_B[j - 4];
                             else if(j<510)
                             {
-                                Trans_Buffer[j] = Trans_Matrix[i * 502 + j - 8];
+                                //Trans_Buffer[j] = Trans_Matrix[i * 502 + j - 8];
 
-                                /*if(b==1)
+                                if (a==255)
                                 {
-                                    if (a==255)
-                                    {
-                                        a = 0;
-                                    }
-                                    else
-                                    {
-                                        a++;
-                                    }
-                                    b = 0;
-                                    //a = 255;
-                                    Trans_Buffer[j] = Convert.ToByte(a);
+                                    a = 0;
                                 }
                                 else
                                 {
-                                    b ++;
-                                    //a = 0;
-                                    Trans_Buffer[j] = Convert.ToByte(0);
-                                }*/
+                                    a++;
+                                }
+                                //a = 255;
+                                Trans_Buffer[j] = Convert.ToByte(a);
                             }
                             else
                                 Trans_Buffer[j] = Convert.ToByte(rai[j-510]);
@@ -465,9 +455,9 @@ namespace TD_Displayer
 
                 Thread.Sleep(2);
 
-                for (i = 0; i < 4;i++ )
+                for (int k = 0; k < 4;k++ )
                 {
-                    switch (i)
+                    switch (k)
                     {
                         case 0:
                             Success = Usb_Mine.Collect(512, Collect_Buffer1);
