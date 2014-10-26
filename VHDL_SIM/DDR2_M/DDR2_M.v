@@ -142,7 +142,7 @@ module ddr2 (
     odt
 );
 
-    `include "ddr2_parameters.vh"
+    `include "D:/Spira_Heaven/0-MyWorks/3D_Displayer/Controller/VHDL_SIM/DDR2_M/ddr2_parameters.vh"
 
     // text macros
     `define DQ_PER_DQS DQ_BITS/DQS_BITS
