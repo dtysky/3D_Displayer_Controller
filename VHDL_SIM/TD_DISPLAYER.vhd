@@ -36,7 +36,10 @@ use ieee.std_logic_unsigned.all;
 entity TD_DISPLAYER is
 port
 	(
-		inclk:in std_logic;
+		clk_40m_p,clk_40m_p1:in std_logic;
+		clk_160m_p,clk_160m_p1,clk_160m_n1:in std_logic;
+		clk_320m_p,clk_320m_n,clk_stpii:in std_logic;
+		pll1_lock,pll2_lock,pll3_lock:in std_logic:='0';
 		 
 		------------DDR2------------
 		ddr2_clk,ddr2_n_clk:out std_logic;
@@ -85,34 +88,6 @@ end entity;
 
 
 architecture displayer of TD_DISPLAYER is
-
-
-component PLL1 is
-port
-	(
-		inclk0:in std_logic;
-		c0,c1,c2,c3:out std_logic;
-		locked:out std_logic
-	);
-end component;
-
-component PLL2 is
-port
-	(
-		inclk0:in std_logic;
-		c0,c1,c2,c3,c4:out std_logic;
-		locked:out std_logic
-	);
-end component;		
-
-component PLL3 is
-port
-	(
-		inclk0:in std_logic;
-		c0:out std_logic;
-		locked:out std_logic
-	);
-end component;	
 
 component DDR2_CONTROL is
 port
@@ -240,13 +215,6 @@ port
 
 end component;
 
------------------------clock--------------------------
-signal inclk_pll2,inclk_pll3:std_logic;
-signal clk_40m_p,clk_40m_p1:std_logic;
-signal clk_160m_p,clk_160m_p1,clk_160m_n1:std_logic;
-signal clk_320m_p,clk_320m_n,clk_stpii:std_logic;
-signal pll1_lock,pll2_lock,pll3_lock:std_logic:='0';
-
 ------------------------ram----------------------------
 signal data_from_ram_1,data_from_ram_2:std_logic_vector(15 downto 0);
 signal dm_s:std_logic_vector(3 downto 0);
@@ -301,31 +269,6 @@ signal lwb_in_data:std_logic_vector(7 downto 0);
 
 
 begin
-
-	PLL_1:PLL1
-		port map
-			(
-				inclk0=>inclk,
-				c0=>clk_40m_p,c1=>clk_40m_p1,c2=>inclk_pll2,c3=>inclk_pll3,
-				locked=>pll1_lock
-			);
-	
-	PLL_2:PLL2
-		port map
-			(
-				inclk0=>inclk_pll2,
-				c0=>clk_160m_p,c1=>clk_160m_p1,c2=>clk_160m_n1,c3=>clk_320m_p,c4=>clk_320m_n,
-				locked=>pll2_lock
-			);
-			
-	PLL_3:PLL3
-		port map
-			(
-				inclk0=>inclk_pll3,
-				c0=>clk_stpii,
-				locked=>pll3_lock
-			);
-	
 
 	DDR2_1:DDR2_CONTROL 
 		port map

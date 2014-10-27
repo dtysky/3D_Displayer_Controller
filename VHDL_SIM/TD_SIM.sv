@@ -4,8 +4,10 @@ module TD_SIM;
 
 	typedef enum {true,false} bool;
 
+	//Clock
+	bit clk_40m_p,clk_40m_p1,clk_160m_p,clk_160m_p1,clk_160m_n1;
+	bit clk_320m_p,clk_320m_n,clk_stpii,pll1_lock,pll2_lock,pll3_lock;
 	//DDR2
-	bit clk_c_0,clk_c_180,clk_o_0,clk_o_180,clk_d_0,clk_d_180,pll_lock;
 	bit ddr2_clk,ddr2_clk_n;
 	bit cke,n_cs,n_ras,n_cas,n_we;
 	wire[1:0] dm,dm_2;
@@ -106,10 +108,8 @@ module TD_SIM;
 
 	//Instantiation
 	CLOCK CLK(
-		clk_c_0,clk_c_180,
-		clk_o_0,clk_o_180,
-		clk_d_0,clk_d_180,
-		pll_lock
+			clk_40m_p,clk_40m_p1,clk_160m_p,clk_160m_p1,clk_160m_n1,
+			clk_320m_p,clk_320m_n,clk_stpii,pll1_lock,pll2_lock,pll3_lock
 		);
 
 	TD_DISPLATER TD_DIS(
