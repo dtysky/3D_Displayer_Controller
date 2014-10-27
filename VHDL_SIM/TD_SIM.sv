@@ -2,6 +2,8 @@ module TD_SIM;
 	timeunit 1ps;
 	timeprecision 1ps;
 
+	typedef enum {true,false} bool;
+
 	//DDR2
 	bit clk_c_0,clk_c_180,clk_o_0,clk_o_180,clk_d_0,clk_d_180,pll_lock;
 	bit ddr2_clk,ddr2_clk_n;
@@ -34,8 +36,69 @@ module TD_SIM;
 	bit bluetooth_reset;
 	wire[3:0] bluetooth_data;
 
+	//Class
 	class usb_class;
-	
+		bit[1:0][7:0] cmd;
+		bit[1:0][7:0] length;
+		bit[3:0][7:0] no;
+		bit[7:0] data_p[$];
+		rand bit[1:0][7:0] ack;
+		bit[7:0] data[$],data_r[$];
+		rand int len_true;
+
+		constraint c{
+			len_true>=510;
+			len_true<=512;
+		}
+
+		function new();
+		
+		endfunction : new
+
+		function void up();
+			no+=1;
+		endfunction : up
+
+		function void clear();
+			no=0;
+		endfunction : clear
+
+		function void write_creat();
+			data_p.delete();
+			this.randomize();
+			cmd=16'hA081;
+			length=16'h0041;
+			no+=1;
+			repeat(502)
+				data_p.push_back($urandom_range(0,8'hff));
+			data={>>{cmd,length,no,data_p,ack}};
+		endfunction : write_creat
+
+		function bit[7:0] data_write(int i);
+			return data[i];
+		endfunction : data_write
+
+		function void read_creat();
+			data.delete();
+			repeat(502)
+				data_p.push_back(0);
+			cmd=16'hA081;
+			length=16'h0041;
+			no+=1;
+			data={>>{cmd,length,no,data_p,ack}};
+		endfunction : read_creat
+
+		function void data_read(bit[7:0] d);
+			data_r.push_back(d);
+		endfunction : data_read
+
+		function bool ack_check(bit[1:0][7:0] ack_in);
+			if (ack==ack_in)
+				return true;
+			else
+				return false;
+		endfunction : ack_check
+		
 	endclass :usb_class
 
 	//Class
@@ -101,9 +164,82 @@ module TD_SIM;
 		odt
 		);
 
-		initial begin
+	logic[15:0] usb_data_reg;
+	assign usb_data=usb_data_reg;
 
+	//Task
+	task usb_write();
+		int i;
+		bit[1:0][7:0] ack;
+		usb.write_creat();
+		@(posedge usb_clk);
+		usb_full=1;
+		while(!sloe) @(posedge usb_clk);
+		usb_data_reg[15:8]=8'h00;
+		usb_data_reg[7:0]=usb.data_write(0);
+		usb_full=0;
+		i=1;
+		while(i<512) @(posedge usb_clk) begin
+			if(slrd) begin
+				usb_data_reg[15:8]=8'h00;
+				usb_data_reg[7:0]=usb.data_write(i);
+				i++;
+			end
 		end
+		usb_empty=1;
+		i=0;
+		usb_data_reg=16'hzzzz;
+		while(1) @(posedge usb_clk) begin
+			if (i>1)
+				$fatal("Error!");
+			else if  (pktend)
+				break;
+			else if (slwr)
+				ack[i]=usb_data[7:0];
+				i++;
+		end
+		usb.ack_check(ack);
+	endtask : usb_write
+
+	task usb_read();
+		int i;
+		bit[1:0][7:0] ack;
+		usb.write_creat();
+		@(posedge usb_clk);
+		usb_full=1;
+		while(!sloe) @(posedge usb_clk);
+		usb_data_reg[15:8]=8'h00;
+		usb_data_reg[7:0]=usb.data_write(0);
+		usb_full=0;
+		i=1;
+		while(i<512) @(posedge usb_clk) begin
+			if(slrd) begin
+				usb_data_reg[15:8]=8'h00;
+				usb_data_reg[7:0]=usb.data_write(i);
+				i++;
+			end
+		end
+		usb_empty=1;
+		i=0;
+		usb_data_reg=16'hzzzz;
+		usb_in=1;
+		while(!slwr) @(posedge usb_clk);
+		usb.data_read(usb_data[7:0]);
+		while(slwr) @(posedge usb_clk)
+			usb.data_read(usb_data[7:0]);
+		usb_in=0;
+		
+	endtask : usb_read
+
+
+	initial begin
+		usb=new();
+		repeat(100)
+			usb_write();
+		repeat(100)
+			usb_read();
+
+	end
 
 
 
