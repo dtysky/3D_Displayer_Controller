@@ -112,7 +112,7 @@ module TD_SIM;
 			clk_320m_p,clk_320m_n,clk_stpii,pll1_lock,pll2_lock,pll3_lock
 		);
 
-	TD_DISPLATER TD_DIS(
+	td_displayer TD_DIS(
 		ddr2_clk,ddr2_clk_n,
 		cke,n_cs,n_ras,n_cas,n_we,
 		dm[1],dm[0],dm_2[1],dm_2[0],

@@ -1,0 +1,6 @@
+set_output_delay -clock usb_clk -max 1.200 [get_ports usb_data]
+set_output_delay -clock usb_clk -max 1.200 [get_ports usb_fifoadr]
+set_output_delay -clock usb_clk -max 1.200 [get_ports sloe]
+set_output_delay -clock usb_clk -max 1.200 [get_ports slrd]
+set_output_delay -clock usb_clk -max 1.200 [get_ports pktend]
+set_output_delay -clock usb_clk -max 1.200 [get_ports slwr]

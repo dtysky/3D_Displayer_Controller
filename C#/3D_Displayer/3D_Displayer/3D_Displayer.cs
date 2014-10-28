@@ -350,6 +350,7 @@ namespace TD_Displayer
                             {
                                 StrDebug.Write(System.Convert.ToString(rai[0], 16).Insert(0, new string('0', 2 - System.Convert.ToString(rai[0], 16).Length)) + System.Convert.ToString(rai[1], 16).Insert(0, new string('0', 2 - System.Convert.ToString(rai[1], 16).Length)) + "\n");
                                 StrDebug.Write(System.Convert.ToString(Trans_Buffer[0], 16).Insert(0, new string('0', 2 - System.Convert.ToString(Trans_Buffer[0], 16).Length)) + System.Convert.ToString(Trans_Buffer[1], 16).Insert(0, new string('0', 2 - System.Convert.ToString(Trans_Buffer[1], 16).Length)) + "\n\n");
+                                StrDebug.Flush();
                                 //StrDebug.Write(System.Convert.ToString(rai[0], 2).Insert(0, new string('0', 8 - System.Convert.ToString(rai[0], 2).Length)) + System.Convert.ToString(rai[1], 2).Insert(0, new string('0', 8 - System.Convert.ToString(rai[1], 2).Length)) + "\n");
                                 //StrDebug.Write(System.Convert.ToString(Trans_Buffer[0], 2).Insert(0, new string('0', 8 - System.Convert.ToString(Trans_Buffer[0], 2).Length)) + System.Convert.ToString(Trans_Buffer[1], 2).Insert(0, new string('0', 8 - System.Convert.ToString(Trans_Buffer[1], 2).Length)) + "\n\n");
                                 i--;

@@ -249,10 +249,10 @@ begin
 						
 						case fifo_utr_num_w_buffer is
 							
-							when "0111111101" =>
+							when "0111111100" =>
 								usb_check(7 downto 0)<=usb_data_in(7 downto 0);
 								
-							when "0111111110" =>
+							when "0111111101" =>
 								usb_check(15 downto 8)<=usb_data_in(7 downto 0);
 								sloe<='0';
 								slrd<='0';  
