@@ -508,7 +508,8 @@ begin
 							when "1010000010000001" => --UTF8-传送-A081
 								ram_state<=trans;
 							when "1001010101011101" => --UTF8-锁定-955B
-								ram_state<=lock;
+								--ram_state<=lock;
+								null;
 							when others =>
 								ram_state<=reset;
 						

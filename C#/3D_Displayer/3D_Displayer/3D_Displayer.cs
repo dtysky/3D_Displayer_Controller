@@ -242,7 +242,8 @@ namespace TD_Displayer
                 BinaryReader Image_Matrix = new BinaryReader(Image_Matrix_add);
 
                 Trans_Matrix = Image_Matrix.ReadBytes(Convert.ToInt32(Image_Matrix.BaseStream.Length));
-                int Trans_Matrix_len = Trans_Matrix.Length / 512;
+                //int Trans_Matrix_len = Trans_Matrix.Length / 512;
+                int Trans_Matrix_len = 50001;
                 int Trans_Matrix_Rem = Trans_Matrix.Length % 512;
 
                 MyInvoke_B Re_B = new MyInvoke_B(Refresh_Bar);
