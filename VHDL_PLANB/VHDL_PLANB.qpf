@@ -18,13 +18,13 @@
 #
 # Quartus II 64-Bit
 # Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
-# Date created = 19:05:49  December 25, 2014
+# Date created = 14:26:09  December 30, 2014
 #
 # -------------------------------------------------------------------------- #
 
 QUARTUS_VERSION = "13.0"
-DATE = "19:05:49  December 25, 2014"
+DATE = "14:26:09  December 30, 2014"
 
 # Revisions
 
-PROJECT_REVISION = "VHDL_PLANEB"
+PROJECT_REVISION = "VHDL_PLANB"
