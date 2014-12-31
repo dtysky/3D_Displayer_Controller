@@ -53,7 +53,7 @@ architecture RTL of VHDL_PLANB is
 	component LED is
 		generic
 			(
-				constant cpd:integer:=3000	------------count per one degree（inclk下）
+				constant cpd:integer:=4000	------------count per one degree（inclk下）
 			);
 		
 		port
